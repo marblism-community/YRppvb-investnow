@@ -2,7 +2,7 @@
   "type": "nextjs",
   "commands": {
     "build": "pnpm run build",
-    "start": "database:sync && pnpm run start"
+    "start": "pnpm run database:sync && pnpm run start"
   },
   "commandsWorkspace": {
     "init": "pnpm install && pnpm run global:sync ; pnpm run database:seed",
