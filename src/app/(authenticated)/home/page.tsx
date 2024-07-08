@@ -1,15 +1,14 @@
 'use client'
 
-import { Typography, Row, Col, Card, List, Avatar, Spin } from 'antd'
-import { BellOutlined, LineChartOutlined } from '@ant-design/icons'
-const { Title, Text, Paragraph } = Typography
 import { useUserContext } from '@/core/context'
-import { useRouter, useParams } from 'next/navigation'
-import { useUploadPublic } from '@/core/hooks/upload'
-import { useSnackbar } from 'notistack'
-import dayjs from 'dayjs'
 import { Api } from '@/core/trpc'
 import { PageLayout } from '@/designSystem/layouts/Page.layout'
+import { BellOutlined, LineChartOutlined } from '@ant-design/icons'
+import { Avatar, Card, Col, List, Row, Spin, Typography } from 'antd'
+import dayjs from 'dayjs'
+import { useParams, useRouter } from 'next/navigation'
+import { useSnackbar } from 'notistack'
+const { Title, Text, Paragraph } = Typography
 
 export default function HomePage() {
   const router = useRouter()
@@ -21,7 +20,7 @@ export default function HomePage() {
     Api.user.findUnique.useQuery({
       where: { id: user?.id },
       include: {
-        startups: { include: { investments: true } },
+        startups: true,
         investors: { include: { investments: true } },
       },
     })

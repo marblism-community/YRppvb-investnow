@@ -1,30 +1,30 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useUserContext } from '@/core/context'
+import { useUploadPublic } from '@/core/hooks/upload'
+import { Api } from '@/core/trpc'
+import { PageLayout } from '@/designSystem/layouts/Page.layout'
 import {
-  Typography,
+  DeleteOutlined,
+  DownloadOutlined,
+  EditOutlined,
+  UploadOutlined,
+} from '@ant-design/icons'
+import {
   Button,
   Form,
   Input,
-  Upload,
   List,
   Modal,
   Spin,
+  Typography,
+  Upload,
 } from 'antd'
-import {
-  EditOutlined,
-  DeleteOutlined,
-  UploadOutlined,
-  DownloadOutlined,
-} from '@ant-design/icons'
-const { Title, Text } = Typography
-import { useUserContext } from '@/core/context'
-import { useRouter, useParams } from 'next/navigation'
-import { useUploadPublic } from '@/core/hooks/upload'
-import { useSnackbar } from 'notistack'
 import dayjs from 'dayjs'
-import { Api } from '@/core/trpc'
-import { PageLayout } from '@/designSystem/layouts/Page.layout'
+import { useParams, useRouter } from 'next/navigation'
+import { useSnackbar } from 'notistack'
+import { useState } from 'react'
+const { Title, Text } = Typography
 
 export default function InvestorDetailsPage() {
   const router = useRouter()
@@ -193,7 +193,7 @@ export default function InvestorDetailsPage() {
         renderItem={investment => (
           <List.Item>
             <List.Item.Meta
-              title={`Investment in ${investment.startup?.name}`}
+              title={`Investment`}
               description={`Amount: $${investment.amount.toString()} on ${dayjs(investment.date).format('YYYY-MM-DD')}`}
             />
           </List.Item>
