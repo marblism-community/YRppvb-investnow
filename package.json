@@ -8,7 +8,7 @@
     "dev": "pnpm run global:sync && concurrently \"pnpm run dev:app\" \"pnpm run dev:models\"",
     "dev:app": "next dev -p 8099",
     "dev:models": "nodemon -e zmodel -w models -x 'pnpm run global:sync'",
-    "build": "next build",
+   "build": "pnpm run crud:sync && next build",
     "start": "next start",
     "lint": "next lint",
     "check": "tsc",
