@@ -1,0 +1,11 @@
+{
+  "type": "nextjs",
+  "commands": {
+    "build": "pnpm run build",
+    "start": "pnpm run start"
+  },
+  "commandsWorkspace": {
+    "init": "pnpm install && pnpm run global:sync ; pnpm run database:seed",
+    "dev": "pnpm run dev"
+  }
+}

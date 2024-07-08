@@ -1,0 +1,9 @@
+import "./user.zmodel";
+
+model Role {
+    id     String @id @default(uuid())
+    name   String
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+    @@allow('all', auth().id == this.userId)
+}

@@ -1,0 +1,18 @@
+
+ import "./startup.zmodel"  
+ import "./investor.zmodel"
+
+model Investment {
+
+    id          String    @id @default(uuid())
+    amount      Decimal
+    date        String
+
+    startupId   String?
+    startup     Startup?  @relation(fields: [startupId], references: [id], name: "startup")
+    investorId  String?
+    investor    Investor? @relation(fields: [investorId], references: [id], name: "investor")
+    dateCreated DateTime  @default(now())
+    dateUpdated DateTime  @updatedAt @default(now())
+    @@allow("all", true)
+}

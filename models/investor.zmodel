@@ -1,0 +1,19 @@
+
+ import "./user.zmodel"  
+ import "./document.zmodel"  
+ import "./investment.zmodel"
+
+model Investor {
+
+    id          String       @id @default(uuid())
+    name        String
+    contactInfo String?
+
+    userId      String?
+    user        User?        @relation(fields: [userId], references: [id], name: "user")
+    documents   Document[]   @relation("investor")
+    investments Investment[] @relation("investor")
+    dateCreated DateTime     @default(now())
+    dateUpdated DateTime     @updatedAt @default(now())
+    @@allow("all", true)
+}
