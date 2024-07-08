@@ -73,16 +73,15 @@ model Role {
 
 /// @@allow('all', true)
 model Startup {
-  id                 String       @id() @default(uuid())
+  id                 String     @id() @default(uuid())
   name               String
   description        String?
   performanceMetrics String?
   userId             String?
-  user               User?        @relation(fields: [userId], references: [id], name: "user")
-  documents          Document[]   @relation("startup")
-  investments        Investment[] @relation("startup")
-  dateCreated        DateTime     @default(now())
-  dateUpdated        DateTime     @default(now()) @updatedAt()
+  user               User?      @relation(fields: [userId], references: [id], name: "user")
+  documents          Document[] @relation("startup")
+  dateCreated        DateTime   @default(now())
+  dateUpdated        DateTime   @default(now()) @updatedAt()
 }
 
 /// @@allow('all', true)
@@ -117,8 +116,6 @@ model Investment {
   id          String    @id() @default(uuid())
   amount      Decimal
   date        String
-  startupId   String?
-  startup     Startup?  @relation(fields: [startupId], references: [id], name: "startup")
   investorId  String?
   investor    Investor? @relation(fields: [investorId], references: [id], name: "investor")
   dateCreated DateTime  @default(now())

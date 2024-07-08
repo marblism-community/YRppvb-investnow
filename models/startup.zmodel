@@ -13,7 +13,6 @@ model Startup {
     userId             String?
     user               User?        @relation(fields: [userId], references: [id], name: "user")
     documents          Document[]   @relation("startup")
-    investments        Investment[] @relation("startup")
     dateCreated        DateTime     @default(now())
     dateUpdated        DateTime     @updatedAt @default(now())
     @@allow("all", true)

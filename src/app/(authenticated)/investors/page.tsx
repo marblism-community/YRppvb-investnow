@@ -6,7 +6,6 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 const { Title, Paragraph } = Typography
 import { useUserContext } from '@/core/context'
 import { useRouter, useParams } from 'next/navigation'
-import { useUploadPublic } from '@/core/hooks/upload'
 import { useSnackbar } from 'notistack'
 import dayjs from 'dayjs'
 import { Api } from '@/core/trpc'
@@ -22,8 +21,8 @@ export default function InvestorsPage() {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [form] = Form.useForm()
 
-  const { data: investors, isLoading } = Api.investor.findMany.useQuery({
-    include: { user: true, documents: true, investments: true },
+  const { data: investments, isLoading } = Api.investment.findMany.useQuery({
+    include: { investor: true },
   })
 
   const createInvestorMutation = Api.investor.create.useMutation()
@@ -43,38 +42,43 @@ export default function InvestorsPage() {
     }
   }
 
-  const filteredInvestors = investors?.filter(investor =>
-    investor.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredInvestments = investments?.filter(investment =>
+    investment.investor?.name.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Investor Name',
+      dataIndex: ['investor', 'name'],
+      key: 'investorName',
+    },
+    {
+      title: 'Date of Investment',
+      dataIndex: 'date',
+      key: 'date',
+      render: (date: string) => dayjs(date).format('YYYY-MM-DD'),
     },
     {
       title: 'Contact Info',
-      dataIndex: 'contactInfo',
+      dataIndex: ['investor', 'contactInfo'],
       key: 'contactInfo',
     },
     {
-      title: 'Date Created',
-      dataIndex: 'dateCreated',
-      key: 'dateCreated',
+      title: 'Amount Invested',
+      dataIndex: 'amount',
+      key: 'amount',
     },
   ]
 
   return (
     <PageLayout layout="full-width">
-      <Title level={2}>Investor Management</Title>
+      <Title level={2}>Investment Management</Title>
       <Paragraph>
-        As a venture capitalist, you can view, add, and manage your investor
-        relationships.
+        As a venture capitalist, you can view, add, and manage your investments.
       </Paragraph>
       <Space direction="vertical" style={{ width: '100%' }}>
         <Input
-          placeholder="Search investors"
+          placeholder="Search investments by investor name"
           prefix={<SearchOutlined />}
           value={searchTerm}
           onChange={handleSearch}
@@ -88,7 +92,7 @@ export default function InvestorsPage() {
         </Button>
         <Table
           columns={columns}
-          dataSource={filteredInvestors}
+          dataSource={filteredInvestments}
           loading={isLoading}
           rowKey="id"
         />
