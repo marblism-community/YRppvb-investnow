@@ -9,7 +9,7 @@
     "dev:app": "next dev -p 8099",
     "dev:models": "nodemon -e zmodel -w models -x 'pnpm run global:sync'",
    "build": "pnpm run crud:sync && next build",
-    "start": "next start",
+    "start": "next start -p 8099",
     "lint": "next lint",
     "check": "tsc",
     "global:sync": "pnpm run crud:sync && pnpm run database:sync",
